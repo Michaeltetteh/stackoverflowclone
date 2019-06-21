@@ -3,6 +3,8 @@ from django.views.generic import (
     CreateView,
     DetailView,
     UpdateView,
+    RedirectView,
+    DayArchiveView,
 )
 from django.shortcuts import render
 from .forms import (
@@ -12,6 +14,9 @@ from .forms import (
 )
 from .models import Question,Answer
 from django.http import HttpResponseBadRequest
+from django.urls import reverse
+from django.utils import timezone
+
 
 
 class AskQuestionView(LoginRequiredMixin,CreateView):
@@ -91,7 +96,7 @@ class CreateAnswerView(LoginRequiredMixin,CreateView):
 class UpdateAnswerAccepetance(LoginRequiredMixin,UpdateView):
     form_class = AnswerAcceptanceForm
     queryset = Answer.objects.all()
-
+    template_name = "qanda/common/list_answers.html"
     def get_success_url(self):
         return self.object.question.get_absolute_url()
 
@@ -99,3 +104,23 @@ class UpdateAnswerAccepetance(LoginRequiredMixin,UpdateView):
         return HttpResponseBadRequest(
             redirect_to=self.object.question.get_absolute_url()
         )
+
+
+
+class DailyQuestionList(DayArchiveView):
+    queryset = Question.objects.all()
+    date_field = 'created'
+    month_format = '%m'
+    allow_empty = True
+
+class TodaysQuestionList(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        today = timezone.now()
+        return reverse('qanda:daily_questions',
+                        kwargs={
+                            'day': today.day,
+                            'month': today.month,
+                            'year': today.year,
+                        }
+        )
+

@@ -130,3 +130,9 @@ MARKDOWNIFY_WHITELIST_TAGS = [
 
 #crispy form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+#login config
+LOGIN_URL = 'user:login'
+LOGIN_REDIRECT_URL = 'qanda:today'
+LOGOUT_REDIRECT_URL = 'qanda:today'
