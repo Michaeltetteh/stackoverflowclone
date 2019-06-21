@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} {{ question.title }} - {{ block.super }}{% endblock title %}
+    
+
+{% block body %}
+    {% include 'qanda/common/display_question.html' %}
+    {% include 'qanda/common/list_answers.html' %}
+    {#{% include 'qanda/common/view_questions/question_answers.html' %}#}
+    
+    {% if user.is_authenticated %}
+        {% include 'qanda/common/post_answer.html' %}
+    {% else %}
+        <div>Login to post answer</div>
+    {% endif %}
+{% endblock body %}
+    
