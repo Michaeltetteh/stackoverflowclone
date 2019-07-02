@@ -139,7 +139,7 @@ LOGOUT_REDIRECT_URL = 'qanda:today'
 
 
 #elasticsearch config
-DOCKER_MACHINE_IP = 192.168.99.100
+DOCKER_MACHINE_IP = "192.168.99.100"
 ES_INDEX = 'stackoverflowclone'
 ES_HOST = DOCKER_MACHINE_IP
 ES_PORT = '9200'
