@@ -51,6 +51,6 @@ def upsert(question_model):
         body={
             'doc':question_dict,
             'doc_as_upsert':True,
-        })    
+        })   
     return response
-    
+

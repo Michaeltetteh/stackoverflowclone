@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.urls.base import reverse
-from .service.elasticsearch import upsert
+from qanda.service import elasticsearch
 
 class Question(models.Model):
     title        = models.CharField(max_length=140)
@@ -33,12 +33,12 @@ class Question(models.Model):
         }
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        elasticsearch.upsert(self)
         super().save(
             force_insert=force_insert,
             force_update=force_update,
             using=using,
             update_fields=update_fields)
-        upsert(self)
         
 
 
